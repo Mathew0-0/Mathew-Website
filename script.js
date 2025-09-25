@@ -88,3 +88,20 @@ window.addEventListener("scroll", () => {
   }
 });
 
+// Include resume cards in the reveal
+const resumeEls = document.querySelectorAll(".resume-card");
+
+// One reveal function for everything
+function revealOnScroll() {
+  const triggerBottom = window.innerHeight * 0.8;
+  [...document.querySelectorAll(".project-card, .about-text, .about-slide, .resume-card")]
+    .forEach(el => {
+      const top = el.getBoundingClientRect().top;
+      if (top < triggerBottom) el.classList.add("show");
+    });
+}
+
+// Hook it up
+window.addEventListener("scroll", revealOnScroll);
+// Run once on load in case some are already in view
+revealOnScroll();

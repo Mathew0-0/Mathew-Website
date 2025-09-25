@@ -189,3 +189,79 @@ html {
   opacity: 1;
   transform: translateX(0) translateY(0);
 }
+
+/* Resume grid and cards */
+.resume-download {
+  display: inline-block;
+  margin: 1rem 0 2rem;
+}
+
+.resume-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 2rem;
+}
+
+.resume-card {
+  background: #1a1a1a;          /* light gray on black (same vibe as #111) */
+  color: #fff;                   /* white text */
+  border-radius: 14px;           /* curved corners */
+  padding: 1.5rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  opacity: 0;                    /* hidden until reveal */
+  transition: transform 0.9s ease, opacity 0.9s ease;
+}
+
+/* titles inside cards */
+.resume-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+/* slide-in directions (reuse pattern from About) */
+.from-left   { transform: translateX(-80px); }
+.from-right  { transform: translateX( 80px); }
+.from-bottom { transform: translateY( 80px); }
+
+/* revealed state */
+.resume-card.show,
+.about-text.show,
+.about-slide.show {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+}
+
+.btn, form button {
+
+  color: #fff;
+}
+
+/* Resume download button underline */
+.resume-download {
+  position: relative;
+  display: inline-block;
+  background: #000000;   /* or whatever button color you picked */
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.resume-download::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 6px;       /* adjust bottom to sit close under text */
+  width: 0;
+  height: 2px;
+  background: #fff;           /* underline color */
+  transition: width 0.3s ease;
+}
+
+.resume-download:hover::after {
+  width: 100%;                /* underline expands on hover */
+}
+
+.resume-download:hover {
+  background: #000000;        /* optional hover color for button */
+}
