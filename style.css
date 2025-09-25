@@ -1,0 +1,191 @@
+/* Global */
+body {
+  background: #000;
+  color: #fff;
+  font-family: "Times New Roman", serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.7;
+}
+
+/* Default navbar (top of page OR when expanded on hover) */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.85);
+  height: 60px;                   /* full size */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 8%;
+  z-index: 1000;
+  transition: height 0.3s ease, padding 0.3s ease, background 0.3s ease;
+}
+
+/* Collapsed (after scrolling down) */
+.navbar.collapsed {
+  height: 20px;                    /* slim line */
+  padding: 0 8%;                  /* remove vertical padding */
+  overflow: hidden;
+  background: #151515;                /* blend with black background */
+}
+
+/* Re-expand when hovering the collapsed bar */
+.navbar.collapsed:hover {
+  height: 60px;                   /* same as default */
+  padding: 1rem 8%;               /* same as default */
+  overflow: visible;
+}
+
+/* Fade content out/in when collapsing/expanding */
+.navbar .logo,
+.navbar .nav-links {
+  transition: opacity 0.3s ease;
+}
+.navbar.collapsed .logo,
+.navbar.collapsed .nav-links {
+  opacity: 0;
+}
+.navbar.collapsed:hover .logo,
+.navbar.collapsed:hover .nav-links {
+  opacity: 1;
+}
+
+.logo { font-size: 1.3rem; font-weight: bold; }
+
+.nav-links { list-style: none; display: flex; gap: 2rem; }
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  padding-bottom: 4px;
+  position: relative;
+}
+.nav-links a::after {
+  content: "";
+  display: block;
+  height: 2px;
+  background: #ffffff;  /* underline color */
+  width: 0;
+  transition: 0.3s;
+  margin: auto;
+}
+.nav-links a:hover::after { width: 100%; }
+
+/* Hero */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 90vh;
+  padding: 6rem 10% 0;  /* ⬅️ was 0 10%, added 6rem top padding */
+}
+.hero-left { max-width: 50%; display: flex; flex-direction: column; }
+.hero-left h1 { font-size: 3rem; line-height: 1.1; margin: 0; }
+
+/* ---- Zero-shift H1 typing (overlay) ---- */
+.typewrap { position: relative; display: inline-block; }
+.h1-placeholder {
+  visibility: hidden;           /* reserves exact final size */
+  white-space: nowrap;
+}
+#h1-typer {
+  position: absolute;
+  inset: 0 auto auto 0;         /* top-left */
+  white-space: nowrap;
+  color: #fff;
+}
+
+/* Tagline: reserve space so H1 never moves */
+#tagline{
+  display: block;
+  height: 1.6em;                /* fixed line height */
+  margin-top: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  visibility: hidden;           /* revealed by JS, but height stays */
+}
+
+/* Hero image */
+.hero-right img {
+  width: 450px;
+  border-radius: 20px;
+  opacity: 0;
+  transform: translateX(100px);
+  animation: slideInRight 1.5s forwards;
+}
+@keyframes slideInRight { to { opacity: 1; transform: translateX(0); } }
+
+/* About Me */
+.about-slideshow { display: flex; gap: 2rem; margin-top: 2rem; overflow: hidden; }
+.about-slide img {
+  width: 300px; border-radius: 15px;
+  transform: translateX(-100%); opacity: 0;
+  animation: slideInLeft 1s forwards; animation-delay: 0.3s;
+}
+@keyframes slideInLeft { to { transform: translateX(0); opacity: 1; } }
+
+/* Sections */
+.content-section { padding: 6rem 10%; text-align: left; }
+
+/* Project & Volunteer cards */
+.project-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 3rem; }
+.project-card {
+  background: #111; padding: 1.5rem; border-radius: 12px;
+  opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out;
+}
+.project-card img { width: 100%; border-radius: 10px; margin-bottom: 1rem; }
+.project-card.show { opacity: 1; transform: translateY(0); }
+
+/* Caret for any typing target */
+.type-cursor::after {
+  content: "|"; margin-left: 4px; animation: blink .9s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Wrapping behavior */
+@media (max-width: 600px) {
+  #tagline { white-space: normal; }
+}
+
+/* Offset scroll so sticky navbar doesn’t cover section headers */
+:target {
+  scroll-margin-top: 100px;  /* adjust to your navbar height */
+}
+
+/* Optional: smooth scrolling effect */
+html {
+  scroll-behavior: smooth;
+}
+
+/* About text animation */
+.about-text {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-out;
+}
+.about-text.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* About images */
+.about-slide {
+  opacity: 0;
+  transition: all 1s ease-out;
+}
+.about-slide img {
+  width: 350px;
+  border-radius: 15px;
+}
+
+/* Different directions */
+.from-left   { transform: translateX(-80px); }
+.from-right  { transform: translateX(80px); }
+.from-bottom { transform: translateY(80px); }
+
+.from-left.show,
+.from-right.show,
+.from-bottom.show {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+}
