@@ -29,8 +29,6 @@ body {
   overflow: hidden;
   background: #151515;
 }
-
-/* Re-expand on hover */
 .navbar.collapsed:hover {
   height: 60px;
   padding: 1rem 8%;
@@ -51,6 +49,7 @@ body {
   opacity: 1;
 }
 
+/* Nav links */
 .nav-links {
   list-style: none;
   display: flex;
@@ -142,11 +141,18 @@ body {
 /* ==================== ABOUT ==================== */
 .content-section { padding: 6rem 10%; text-align: left; }
 
+/* About grid */
 .about-slideshow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   margin-top: 2rem;
+}
+@media (max-width: 1024px) {
+  .about-slideshow { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .about-slideshow { grid-template-columns: 1fr; }
 }
 .about-slide {
   aspect-ratio: 2 / 2;
@@ -162,7 +168,6 @@ body {
   object-fit: cover;
   display: block;
 }
-
 .about-text {
   opacity: 0;
   transform: translateY(40px);
@@ -187,7 +192,6 @@ body {
 @media (max-width: 600px) {
   .project-grid { grid-template-columns: 1fr; }
 }
-
 .project-card {
   background: #111;
   padding: 1.5rem;
@@ -224,7 +228,6 @@ body {
   padding: 0.8rem 1.5rem;
   border-radius: 5px;
   text-decoration: none;
-  transition: background 0.3s;
 }
 .resume-download::after {
   content: "";
@@ -248,7 +251,6 @@ body {
 @media (max-width: 600px) {
   .resume-grid { grid-template-columns: 1fr; }
 }
-
 .resume-card {
   background: #1a1a1a;
   color: #fff;
@@ -301,6 +303,7 @@ body {
   font-size: 1rem;
   background: #222;
   color: #fff;
+  width: 100%;
 }
 .contact-form input::placeholder,
 .contact-form textarea::placeholder { color: #aaa; }
@@ -393,3 +396,51 @@ html { scroll-behavior: smooth; }
   80% { opacity: 1; transform: scale(1); }
   100% { opacity: 0; transform: scale(0.5); }
 }
+
+/* ==================== MOBILE FIXES ==================== */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding-top: 4rem;
+  }
+  .hero-left, .hero-right { max-width: 100%; }
+  .hero-right img { width: 80%; }
+}
+button, .btn {
+  min-height: 44px;
+  min-width: 44px;
+}
+@media (max-width: 600px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  p  { font-size: 1rem; }
+  .footer-content p { font-size: 1rem; }
+  .linkedin-icon { width: 24px; height: 24px; }
+}
+
+/* ==================== BUTTONS & LINKS ==================== */
+.btn, .github-link {
+  background: none;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  text-decoration: none;
+  line-height: 1.2;
+}
+.btn::after, .github-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transition: width 0.3s ease;
+}
+.btn:hover::after,
+.github-link:hover::after { width: 100%; }
+
