@@ -255,6 +255,7 @@ button, .btn { min-height: 44px; min-width: 44px; }
 .btn:hover::after, .github-link:hover::after { width: 100%; }
 
 /* ==================== POPUP ==================== */
+/* ==================== POPUP ==================== */
 .popup {
   position: fixed;
   bottom: 30px;
@@ -269,4 +270,7 @@ button, .btn { min-height: 44px; min-width: 44px; }
   transition: opacity 0.5s ease, visibility 0.5s;
   z-index: 3000;
 }
-.popup.show { opacity: 1; visibility: visible; }
+.popup.show {
+  opacity: 1;
+  visibility: visible;
+}

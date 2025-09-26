@@ -95,7 +95,7 @@ logo.addEventListener("click", () => {
   setTimeout(() => img.remove(), 2000);
 });
 
-/* ==================== POPUP AFTER FORM SUBMIT ==================== */
+// ==================== POPUP AFTER FORM SUBMIT ====================
 window.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   if (params.get("submitted") === "true") {
@@ -104,7 +104,8 @@ window.addEventListener("DOMContentLoaded", () => {
       popup.classList.add("show");
       setTimeout(() => {
         popup.classList.remove("show");
-      }, 8000); // hide after 8s
+      }, 8000); // hide after 8 seconds
     }
   }
 });
+
