@@ -110,10 +110,15 @@ body {
 .card-actions { display: flex; gap: 0.6rem; margin-top: 0.6rem; flex-wrap: wrap; }
 
 /* ==================== RESUME & VOLUNTEER ==================== */
+
+#resume h2 {
+  margin-bottom: 0.5rem;   /* default is ~1rem+; this pulls them closer */
+}
+
 .resume-download {
   display: inline-block; margin: 1rem 0 2rem; position: relative;
   background: #000; color: #fff; padding: 0.5rem 1.5rem 0.2rem; border-radius: 5px;
-  text-decoration: none; line-height: 1.1;
+  text-decoration: none; line-height: 1.1; margin: 1rem 0 1rem; 
 }
 .resume-download::after {
   content: ""; position: absolute; left: 0; bottom: 0px;
@@ -254,7 +259,6 @@ button, .btn { min-height: 44px; min-width: 44px; }
 }
 .btn:hover::after, .github-link:hover::after { width: 100%; }
 
-/* ==================== POPUP ==================== */
 /* ==================== POPUP ==================== */
 .popup {
   position: fixed;
