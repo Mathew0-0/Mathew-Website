@@ -1,31 +1,29 @@
-// Slide-up animation for Projects & Volunteer
-const cards = document.querySelectorAll(".project-card");
-window.addEventListener("scroll", checkCards);
-function checkCards() {
+/* ==================== SLIDE-UP ANIMATIONS ==================== */
+
+// Reveal elements on scroll (projects, about, resume, volunteer, etc.)
+function revealOnScroll() {
   const triggerBottom = window.innerHeight * 0.8;
-  cards.forEach(card => {
-    const cardTop = card.getBoundingClientRect().top;
-    if (cardTop < triggerBottom) card.classList.add("show");
-  });
-}
 
-// Add slide-up for about text + slides
-const aboutElements = document.querySelectorAll(".about-text, .about-slide");
+  document.querySelectorAll(
+    ".project-card, .about-text, .about-slide, .resume-card"
+  ).forEach(el => {
+    const rect = el.getBoundingClientRect();
 
-window.addEventListener("scroll", checkAbout);
-
-function checkAbout() {
-  const triggerBottom = window.innerHeight * 0.8;
-  aboutElements.forEach(el => {
-    const top = el.getBoundingClientRect().top;
-    if (top < triggerBottom) {
-      el.classList.add("show");
+    if (rect.top < triggerBottom && rect.bottom > 0) {
+      el.classList.add("show");   // element in view → reveal
+    } else {
+      el.classList.remove("show"); // element out of view → reset
     }
   });
 }
 
+window.addEventListener("scroll", revealOnScroll);
+revealOnScroll(); // run once on load
 
-// --- Typing helpers ---
+
+/* ==================== TYPING EFFECT ==================== */
+
+// Typing + erasing helpers
 function type(el, text, speed = 50) {
   el.classList.add("type-cursor");
   el.textContent = "";
@@ -38,6 +36,7 @@ function type(el, text, speed = 50) {
     })();
   });
 }
+
 function erase(el, speed = 30) {
   el.classList.add("type-cursor");
   return new Promise(resolve => {
@@ -48,20 +47,20 @@ function erase(el, speed = 30) {
     })();
   });
 }
+
 const pause = ms => new Promise(r => setTimeout(r, ms));
 
-// --- Apply to hero: H1 types in overlay (no shift), tagline loops (no shift) ---
+// Apply typing to hero text
 (async () => {
   const h1Typer = document.getElementById("h1-typer");
   const h1Text  = document.querySelector(".h1-placeholder").textContent;
   const p       = document.getElementById("tagline");
 
-  // 1) Type H1 into overlay; placeholder reserves space so nothing moves
+  // Type the H1 once (placeholder keeps layout steady)
   await type(h1Typer, h1Text, 55);
 
-  // 2) Reveal the reserved tagline line and loop phrases
-  p.style.visibility = "visible";     // shows the line without changing height
-
+  // Reveal and loop through tagline phrases
+  p.style.visibility = "visible";
   const phrases = [
     "Risk Management & Insurance Student",
     "Developer",
@@ -77,7 +76,10 @@ const pause = ms => new Promise(r => setTimeout(r, ms));
   }
 })();
 
-// Collapse navbar after scrolling down
+
+/* ==================== NAVBAR COLLAPSE ==================== */
+
+// Collapse navbar when scrolling down, expand at top
 const navbar = document.querySelector(".navbar");
 
 window.addEventListener("scroll", () => {
@@ -88,49 +90,21 @@ window.addEventListener("scroll", () => {
   }
 });
 
-// Include resume cards in the reveal
-const resumeEls = document.querySelectorAll(".resume-card");
 
-// One reveal function for everything
-function revealOnScroll() {
-  const triggerBottom = window.innerHeight * 0.8;
+/* ==================== EASTER EGG ==================== */
 
-  document.querySelectorAll(
-    ".project-card, .about-text, .about-slide, .resume-card"
-  ).forEach(el => {
-    const rect = el.getBoundingClientRect();
-
-    if (rect.top < triggerBottom && rect.bottom > 0) {
-      // element is in view → show
-      el.classList.add("show");
-    } else {
-      // element is out of view → reset
-      el.classList.remove("show");
-    }
-  });
-}
-
-window.addEventListener("scroll", revealOnScroll);
-revealOnScroll(); // run once on load
-
-// Hook it up
-window.addEventListener("scroll", revealOnScroll);
-// Run once on load in case some are already in view
-revealOnScroll();
-
-// Easter Egg: click logo -> random gifs pop up
-const logo = document.getElementById("logo");  // now the button
+// Click logo → random gif appears briefly
+const logo = document.getElementById("logo");
 const gifs = [
   "images/batman-pondering.gif"
 ];
 
 logo.addEventListener("click", () => {
-  // create a random gif element
   const img = document.createElement("img");
   img.src = gifs[Math.floor(Math.random() * gifs.length)];
   img.className = "easter-egg";
 
-  // random position on screen
+  // Random position within window
   const x = Math.random() * (window.innerWidth - 100);
   const y = Math.random() * (window.innerHeight - 100);
   img.style.left = `${x}px`;
@@ -138,6 +112,6 @@ logo.addEventListener("click", () => {
 
   document.body.appendChild(img);
 
-  // remove after animation ends (~2s)
+  // Remove after ~2s
   setTimeout(() => img.remove(), 2000);
 });

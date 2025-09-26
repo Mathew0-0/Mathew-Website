@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Navbar (reuse from main site) -->
+
+  <!-- ==================== NAVBAR ==================== -->
   <header>
     <nav class="navbar">
       <button id="logo" class="logo-btn">Mathew Lam</button>
@@ -21,23 +22,28 @@
     </nav>
   </header>
 
-  <!-- Contact Section -->
+  <!-- ==================== CONTACT SECTION ==================== -->
   <section class="content-section contact-section">
     <h2>Contact Me</h2>
-    <p class="contact-intro">I’d love to hear from you! Whether it’s about opportunities, collaborations, or just to say hi, feel free to reach out.</p>
+    <p class="contact-intro">
+      I’d love to hear from you! Whether it’s about opportunities, collaborations, or just to say hi, feel free to reach out.
+    </p>
     
     <div class="contact-container">
-      <!-- Contact Form -->
+      <!-- === Contact Form === -->
       <form class="contact-form" action="https://formsubmit.co/fedd7064662925879fb42a2a097312d6" method="POST">
         <input type="text" name="name" placeholder="Your Name" required>
         <input type="email" name="email" placeholder="Your Email" required>
         <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+        
+        <!-- FormSubmit hidden fields -->
         <input type="hidden" name="_template" value="box">
-        <input type="hidden" name="_captcha" value="false"> <!-- disable captcha if you want -->
+        <input type="hidden" name="_captcha" value="false">
+        
         <button type="submit">Send Message</button>
       </form>
 
-      <!-- Contact Info -->
+      <!-- === Contact Info Box === -->
       <div class="contact-info">
         <h3>Other Ways to Reach Me</h3>
         <p>Email: <a href="mailto:Mathewlam074@gmail.com">Mathewlam074@gmail.com</a></p>
@@ -46,6 +52,7 @@
     </div>
   </section>
 
+  <!-- ==================== FOOTER ==================== -->
   <footer class="site-footer">
     <div class="footer-content">
       <p>© 2025 Mathew Lam</p>
@@ -55,6 +62,7 @@
     </div>
   </footer>
 
+  <!-- ==================== SCRIPTS ==================== -->
   <script src="script.js"></script>
 </body>
 </html>
