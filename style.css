@@ -38,15 +38,15 @@ body {
 }
 
 /* Fade content out/in when collapsing/expanding */
-.navbar .logo,
+.navbar .logo-btn,
 .navbar .nav-links {
   transition: opacity 0.3s ease;
 }
-.navbar.collapsed .logo,
+.navbar.collapsed .logo-btn,
 .navbar.collapsed .nav-links {
   opacity: 0;
 }
-.navbar.collapsed:hover .logo,
+.navbar.collapsed:hover .logo-btn,
 .navbar.collapsed:hover .nav-links {
   opacity: 1;
 }
@@ -105,9 +105,10 @@ body {
   visibility: hidden;           /* revealed by JS, but height stays */
 }
 
-/* Hero image */
 .hero-right img {
-  width: 450px;
+  width: clamp(280px, 30vw, 600px);  /* min 280px, ~30% of screen, max 600px */
+  aspect-ratio: 2 / 2;              /* keeps 3x2 shape */
+  object-fit: cover;                /* fills box without stretching */
   border-radius: 20px;
   opacity: 0;
   transform: translateX(100px);
@@ -275,8 +276,231 @@ html {
 }
 
 /* Make buttons a touch tighter inside cards */
-.project-card .btn {
-  padding: 0.55rem 1rem;
-  border-radius: 8px;
-  font-size: 0.95rem;
+.project-card img {
+  width: 100%;
+  aspect-ratio: 2 / 2;   /* lock shape to 3x2 */
+  object-fit: cover;     /* crop to fill box, no stretching */
+  border-radius: 10px;
+  margin-bottom: 1rem;
 }
+
+.about-slideshow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* straight line grid */
+  gap: 1.5rem;
+}
+
+.about-slide {
+  aspect-ratio: 2 / 2;        /* all boxes same ratio */
+  overflow: hidden;
+  border-radius: 15px;
+  position: relative;
+}
+
+.about-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* fills box without stretching */
+  display: block;
+}
+
+/* Resume Grid Layout */
+.resume-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* default: 3 columns */
+  gap: 2rem;
+}
+
+/* Medium screens: 2 columns */
+@media (max-width: 1024px) {
+  .resume-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Small screens: 1 column */
+@media (max-width: 600px) {
+  .resume-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Projects Grid Layout */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* always 3 across */
+  gap: 2rem;
+  align-items: stretch; /* makes all cards same height */
+}
+
+/* Medium screens: 2 across */
+@media (max-width: 1024px) {
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Small screens: 1 across */
+@media (max-width: 600px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.easter-egg {
+  position: fixed;
+  width: 80px;              /* size of gif */
+  height: 80px;
+  pointer-events: none;      /* so it doesn’t block clicks */
+  animation: popFade 2s forwards;
+  z-index: 2000;
+}
+
+@keyframes popFade {
+  0%   { opacity: 0; transform: scale(0.5); }
+  20%  { opacity: 1; transform: scale(1.2); }
+  80%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.5); }
+}
+
+/* Logo button styling */
+.logo-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  font-family: "Times New Roman", serif;
+}
+
+/* Underline effect */
+.logo-btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;          /* distance below text */
+  width: 0;
+  height: 2px;
+  background: #ffffff;   /* underline color */
+  transition: width 0.3s ease;
+}
+
+.logo-btn:hover::after {
+  width: 100%;
+}
+
+/* Footer */
+.site-footer {
+  background: none;          /* no background */
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;   /* keeps text + icon lined up */
+  gap: 0.75rem;
+}
+
+.footer-content p {
+  margin: 0;
+  font-size: 1.09rem;
+  color: #fff;               /* white text to match your theme */
+}
+
+.linkedin-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.linkedin-icon:hover {
+  transform: scale(1.2);     /* hover zoom */
+}
+
+/* Contact Page */
+.contact-section {
+  text-align: center;
+}
+
+.contact-intro {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  color: #ccc;
+}
+
+.contact-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3rem;
+  flex-wrap: wrap; /* stacks nicely on mobile */
+}
+
+.contact-form {
+  background: #111;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  flex: 1 1 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #222;
+  color: #fff;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #aaa;
+}
+
+.contact-form button {
+  background: #00bcd4;
+  color: #fff;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.contact-form button:hover {
+  background: #008c9e;
+}
+
+.contact-info {
+  background: #111;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 300px;
+  flex: 1 1 250px;
+  text-align: left;
+}
+
+.contact-info h3 {
+  margin-top: 0;
+}
+
+.contact-info a {
+  color: #00bcd4;
+  text-decoration: none;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+

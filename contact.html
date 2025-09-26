@@ -1,38 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact | Mathew Lam</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Navbar (reuse from main site) -->
   <header>
     <nav class="navbar">
-      <div class="logo">Mathew Lam</div>
+      <button id="logo" class="logo-btn">Mathew Lam</button>
       <ul class="nav-links">
         <li><a href="index.html#home">Home</a></li>
-        <li><a href="index.html#about">About</a></li>
         <li><a href="index.html#resume">Resume</a></li>
         <li><a href="index.html#projects">Projects</a></li>
         <li><a href="index.html#volunteer">Volunteer</a></li>
-        <li><a class="active" href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
       </ul>
     </nav>
   </header>
 
-  <section class="content-section">
+  <!-- Contact Section -->
+  <section class="content-section contact-section">
     <h2>Contact Me</h2>
-    <form action="mailto:Mathewlam074@gmail.com" method="post" enctype="text/plain">
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="email" placeholder="Your Email" required />
-      <textarea name="message" placeholder="Your Message" rows="6"></textarea>
-      <button type="submit">Send</button>
-    </form>
+    <p class="contact-intro">I’d love to hear from you! Whether it’s about opportunities, collaborations, or just to say hi, feel free to reach out.</p>
+    
+    <div class="contact-container">
+      <!-- Contact Form -->
+      <form class="contact-form" action="https://formsubmit.co/fedd7064662925879fb42a2a097312d6" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+        <input type="hidden" name="_template" value="box">
+        <input type="hidden" name="_captcha" value="false"> <!-- disable captcha if you want -->
+        <button type="submit">Send Message</button>
+      </form>
+
+      <!-- Contact Info -->
+      <div class="contact-info">
+        <h3>Other Ways to Reach Me</h3>
+        <p>Email: <a href="mailto:Mathewlam074@gmail.com">Mathewlam074@gmail.com</a></p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/mathew-lam-168b01275/" target="_blank">linkedin.com/in/mathew-lam</a></p>
+      </div>
+    </div>
   </section>
 
-  <footer>
-    <p>© 2025 Mathew Lam</p>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>© 2025 Mathew Lam</p>
+      <a href="https://www.linkedin.com/in/mathew-lam-168b01275/" target="_blank" rel="noopener">
+        <img src="images/LinkedIn_icon.svg.webp" alt="LinkedIn" class="linkedin-icon">
+      </a>
+    </div>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>

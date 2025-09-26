@@ -117,3 +117,27 @@ revealOnScroll(); // run once on load
 window.addEventListener("scroll", revealOnScroll);
 // Run once on load in case some are already in view
 revealOnScroll();
+
+// Easter Egg: click logo -> random gifs pop up
+const logo = document.getElementById("logo");  // now the button
+const gifs = [
+  "images/batman-pondering.gif"
+];
+
+logo.addEventListener("click", () => {
+  // create a random gif element
+  const img = document.createElement("img");
+  img.src = gifs[Math.floor(Math.random() * gifs.length)];
+  img.className = "easter-egg";
+
+  // random position on screen
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 100);
+  img.style.left = `${x}px`;
+  img.style.top = `${y}px`;
+
+  document.body.appendChild(img);
+
+  // remove after animation ends (~2s)
+  setTimeout(() => img.remove(), 2000);
+});
