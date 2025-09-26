@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact | Mathew Lam</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-
   <!-- ==================== NAVBAR ==================== -->
   <header>
     <nav class="navbar">
       <button id="logo" class="logo-btn">Mathew Lam</button>
       <ul class="nav-links">
         <li><a href="index.html#home">Home</a></li>
+        <li><a href="index.html#about">About Me</a></li>
         <li><a href="index.html#resume">Resume</a></li>
         <li><a href="index.html#projects">Projects</a></li>
-        <li><a href="index.html#volunteer">Volunteer</a></li>
+        <li><a href="index.html#volunteer">Volunteering</a></li>
         <li><a href="contact.html" class="active">Contact</a></li>
       </ul>
     </nav>
@@ -25,25 +25,27 @@
   <!-- ==================== CONTACT SECTION ==================== -->
   <section class="content-section contact-section">
     <h2>Contact Me</h2>
-    <p class="contact-intro">
-      I’d love to hear from you! Whether it’s about opportunities, collaborations, or just to say hi, feel free to reach out.
-    </p>
+    <p class="contact-intro">I’d love to hear from you! Whether it’s about opportunities, collaborations, or just to say hi, feel free to reach out.</p>
     
     <div class="contact-container">
       <!-- === Contact Form === -->
-      <form class="contact-form" action="https://formsubmit.co/fedd7064662925879fb42a2a097312d6" method="POST">
+      <form class="contact-form" 
+        action="https://formsubmit.co/fedd7064662925879fb42a2a097312d6" 
+        method="POST">
+
         <input type="text" name="name" placeholder="Your Name" required>
         <input type="email" name="email" placeholder="Your Email" required>
         <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-        
-        <!-- FormSubmit hidden fields -->
+
+        <!-- Hidden fields -->
         <input type="hidden" name="_template" value="box">
         <input type="hidden" name="_captcha" value="false">
-        
+        <input type="hidden" name="_next" value="https://mathew0-0.github.io/Mathew-Website/index.html?submitted=true">
+
         <button type="submit">Send Message</button>
       </form>
 
-      <!-- === Contact Info Box === -->
+      <!-- === Contact Info === -->
       <div class="contact-info">
         <h3>Other Ways to Reach Me</h3>
         <p>Email: <a href="mailto:Mathewlam074@gmail.com">Mathewlam074@gmail.com</a></p>
@@ -62,7 +64,7 @@
     </div>
   </footer>
 
-  <!-- ==================== SCRIPTS ==================== -->
+  <!-- Scripts -->
   <script src="script.js"></script>
 </body>
 </html>

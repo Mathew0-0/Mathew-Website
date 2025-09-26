@@ -1,6 +1,4 @@
 /* ==================== SLIDE-UP ANIMATIONS ==================== */
-
-// Reveal elements on scroll (projects, about, resume, volunteer, etc.)
 function revealOnScroll() {
   const triggerBottom = window.innerHeight * 0.8;
 
@@ -10,20 +8,16 @@ function revealOnScroll() {
     const rect = el.getBoundingClientRect();
 
     if (rect.top < triggerBottom && rect.bottom > 0) {
-      el.classList.add("show");   // element in view → reveal
+      el.classList.add("show");   // reveal
     } else {
-      el.classList.remove("show"); // element out of view → reset
+      el.classList.remove("show"); // reset when out of view
     }
   });
 }
-
 window.addEventListener("scroll", revealOnScroll);
-revealOnScroll(); // run once on load
-
+revealOnScroll();
 
 /* ==================== TYPING EFFECT ==================== */
-
-// Typing + erasing helpers
 function type(el, text, speed = 50) {
   el.classList.add("type-cursor");
   el.textContent = "";
@@ -36,7 +30,6 @@ function type(el, text, speed = 50) {
     })();
   });
 }
-
 function erase(el, speed = 30) {
   el.classList.add("type-cursor");
   return new Promise(resolve => {
@@ -47,19 +40,17 @@ function erase(el, speed = 30) {
     })();
   });
 }
-
 const pause = ms => new Promise(r => setTimeout(r, ms));
 
-// Apply typing to hero text
 (async () => {
   const h1Typer = document.getElementById("h1-typer");
   const h1Text  = document.querySelector(".h1-placeholder").textContent;
   const p       = document.getElementById("tagline");
 
-  // Type the H1 once (placeholder keeps layout steady)
+  // Type H1 once
   await type(h1Typer, h1Text, 55);
 
-  // Reveal and loop through tagline phrases
+  // Loop tagline
   p.style.visibility = "visible";
   const phrases = [
     "Risk Management & Insurance Student",
@@ -76,12 +67,8 @@ const pause = ms => new Promise(r => setTimeout(r, ms));
   }
 })();
 
-
 /* ==================== NAVBAR COLLAPSE ==================== */
-
-// Collapse navbar when scrolling down, expand at top
 const navbar = document.querySelector(".navbar");
-
 window.addEventListener("scroll", () => {
   if (window.scrollY > 50) {
     navbar.classList.add("collapsed");
@@ -90,28 +77,34 @@ window.addEventListener("scroll", () => {
   }
 });
 
-
 /* ==================== EASTER EGG ==================== */
-
-// Click logo → random gif appears briefly
 const logo = document.getElementById("logo");
-const gifs = [
-  "images/batman-pondering.gif"
-];
+const gifs = ["images/batman-pondering.gif"];
 
 logo.addEventListener("click", () => {
   const img = document.createElement("img");
   img.src = gifs[Math.floor(Math.random() * gifs.length)];
   img.className = "easter-egg";
 
-  // Random position within window
   const x = Math.random() * (window.innerWidth - 100);
   const y = Math.random() * (window.innerHeight - 100);
   img.style.left = `${x}px`;
   img.style.top = `${y}px`;
 
   document.body.appendChild(img);
-
-  // Remove after ~2s
   setTimeout(() => img.remove(), 2000);
+});
+
+/* ==================== POPUP AFTER FORM SUBMIT ==================== */
+window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("submitted") === "true") {
+    const popup = document.getElementById("popup");
+    if (popup) {
+      popup.classList.add("show");
+      setTimeout(() => {
+        popup.classList.remove("show");
+      }, 8000); // hide after 8s
+    }
+  }
 });
