@@ -94,12 +94,24 @@ const resumeEls = document.querySelectorAll(".resume-card");
 // One reveal function for everything
 function revealOnScroll() {
   const triggerBottom = window.innerHeight * 0.8;
-  [...document.querySelectorAll(".project-card, .about-text, .about-slide, .resume-card")]
-    .forEach(el => {
-      const top = el.getBoundingClientRect().top;
-      if (top < triggerBottom) el.classList.add("show");
-    });
+
+  document.querySelectorAll(
+    ".project-card, .about-text, .about-slide, .resume-card"
+  ).forEach(el => {
+    const rect = el.getBoundingClientRect();
+
+    if (rect.top < triggerBottom && rect.bottom > 0) {
+      // element is in view → show
+      el.classList.add("show");
+    } else {
+      // element is out of view → reset
+      el.classList.remove("show");
+    }
+  });
 }
+
+window.addEventListener("scroll", revealOnScroll);
+revealOnScroll(); // run once on load
 
 // Hook it up
 window.addEventListener("scroll", revealOnScroll);

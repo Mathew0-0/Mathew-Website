@@ -265,3 +265,18 @@ html {
 .resume-download:hover {
   background: #000000;        /* optional hover color for button */
 }
+
+/* Small action row inside project cards */
+.card-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* Make buttons a touch tighter inside cards */
+.project-card .btn {
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
