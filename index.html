@@ -17,6 +17,7 @@
         <li><a href="#about">About Me</a></li>
         <li><a href="#resume">Resume</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#stocks">Stocks</a></li>
         <li><a href="#volunteer">Volunteering</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -74,8 +75,8 @@
     <div class="resume-grid">
       <article class="resume-card from-left">
         <h3>Education</h3>
-        <p><strong>University of Georgia</strong> — B.B.A. Risk Mgmt & Insurance; CS Minor</p>
-        <p><strong>Georgia State University</strong> — CS coursework (transferred)</p>
+        <p><strong>University of Georgia</strong> — B.B.A. Accounting; CS Minor</p>
+        <p><strong>Georgia State University</strong> — CS + Business coursework (transferred)</p>
         <p><strong>Johns Creek High School</strong> - Best time of my life</p>
       </article>
 
@@ -134,11 +135,11 @@
 
       <!-- Biometric Tool -->
       <div class="project-card slide-up">
-        <img src="images/pic1.jpg" alt="Biometric Database Tool">
-        <h3>Biometric Database Tool</h3>
-        <p>Python + SQL + OpenCV authentication system (face geometry, attributes, GUI).</p>
+        <img src="images/images.jpeg" alt="Fish-Based Market Indicator System">
+        <h3>Fish-Based Market Indicator System</h3>
+        <p>Python + OpenCV + Web Scraping system that uses fish movement to predict stock market trends.</p>
         <div class="card-actions">
-          <a class="btn" href="https://github.com/Mathew0-0/REPLACE_WITH_BIOMETRIC_REPO" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://github.com/Mathew0-0/REPLACE_WITH_FISH_MARKET_REPO" target="_blank" rel="noopener">GitHub</a>
         </div>
       </div>
 
@@ -148,6 +149,64 @@
         <h3>Online E-Commerce / Resale</h3>
         <p>Multi-platform resale operation; generated <strong>$21K+</strong> cumulative profit via pricing & turnover optimization.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- ==================== STOCKS SECTION ==================== -->
+  <section id="stocks" class="content-section">
+    <h2 class="slide-up">Stocks</h2>
+    
+    <!-- Year & Month Selector -->
+    <div class="stocks-controls">
+      <div class="control-group">
+        <label for="year-select">Year:</label>
+        <select id="year-select">
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="month-select">Month:</label>
+        <select id="month-select">
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Stock Data & Prediction -->
+    <div class="stocks-main">
+      <div class="stocks-info">
+        <h3 id="stock-month-title">January 2024</h3>
+        <p id="stock-prediction"></p>
+        
+        <!-- Performance Scorecard -->
+        <div id="scorecard-container" class="scorecard-hidden">
+          <h4>Performance Scorecard</h4>
+          <div id="scorecard-content"></div>
+        </div>
+      </div>
+
+      <!-- Chart Container -->
+      <div class="chart-container">
+        <canvas id="performanceChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Gain Simulator -->
+    <div class="gain-simulator">
+      <h3>$1,000 Investment Simulator</h3>
+      <div id="simulator-results" class="simulator-results"></div>
     </div>
   </section>
 
@@ -200,6 +259,8 @@
 
 
   <!-- ==================== SCRIPTS ==================== -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="stocks-data.js"></script>
   <script src="script.js"></script>
   <div id="popup" class="popup">Thank you! Your message has been sent.</div>
 </body>

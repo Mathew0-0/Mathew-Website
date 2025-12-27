@@ -143,8 +143,125 @@ body {
 .contact-intro { max-width: 600px; margin: 0 auto 2rem; color: #ccc; }
 .contact-container { display: flex; justify-content: center; align-items: stretch; gap: 3rem; flex-wrap: wrap; }
 
-.contact-form,
-.contact-info {
+
+/* ==================== STOCKS ==================== */
+.stocks-controls {
+  display: flex; gap: 2rem; margin: 2rem 0; flex-wrap: wrap;
+  align-items: center;
+}
+.control-group {
+  display: flex; gap: 0.8rem; align-items: center;
+}
+.control-group label {
+  font-weight: bold; color: #fff;
+}
+.control-group select {
+  padding: 0.5rem 1rem; background: #1a1a1a; color: #fff;
+  border: 2px solid #333; border-radius: 6px; cursor: pointer;
+  font-size: 1rem; transition: border-color 0.3s;
+}
+.control-group select:hover { border-color: #00bcd4; }
+.control-group select:focus { outline: none; border-color: #00bcd4; }
+
+.stocks-main {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  margin: 2rem 0; align-items: start;
+}
+@media (max-width: 1024px) {
+  .stocks-main { grid-template-columns: 1fr; }
+}
+
+.stocks-info {
+  background: #1a1a1a; padding: 2rem; border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  opacity: 0; animation: slideUp 0.7s ease-out 0.2s forwards;
+}
+.stocks-info h3 {
+  margin: 0 0 1rem 0; color: #fff; font-size: 1.5rem;
+}
+.stocks-info p {
+  color: #ccc; line-height: 1.7; margin: 0 0 1.5rem 0;
+}
+
+.scorecard-hidden { display: none; }
+.scorecard-container { display: block; margin-top: 1.5rem; }
+.scorecard-container h4 {
+  margin: 0 0 1rem 0; color: #00bcd4; font-size: 1.1rem;
+}
+.scorecard-item {
+  display: flex; justify-content: space-between;
+  padding: 0.7rem 0; border-bottom: 1px solid #333;
+  align-items: center;
+  opacity: 0; animation: fadeIn 0.6s ease-out 0.4s forwards;
+}
+.scorecard-item:last-child { border-bottom: none; }
+.scorecard-ticker {
+  font-weight: bold; color: #fff;
+}
+.scorecard-return {
+  padding: 0.3rem 0.8rem; border-radius: 4px; font-weight: bold;
+  font-size: 0.9rem;
+}
+.scorecard-return.positive { background: #2d5f2d; color: #7eff7e; }
+.scorecard-return.negative { background: #5f2d2d; color: #ff7e7e; }
+
+.chart-container {
+  background: #1a1a1a; padding: 2rem; border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35); position: relative;
+  height: 500px;
+  opacity: 0; animation: slideUp 0.7s ease-out 0.3s forwards;
+}
+#performanceChart { max-width: 100%; display: block; }
+
+.gain-simulator {
+  background: #1a1a1a; padding: 2rem; border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35); margin-top: 2rem;
+  height: auto;
+  min-height: 300px;
+  opacity: 0; animation: slideUp 0.7s ease-out 0.4s forwards;
+}
+.gain-simulator h3 {
+  margin: 0 0 1.5rem 0; color: #fff; font-size: 1.3rem;
+}
+.simulator-results {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+.simulator-stock {
+  background: #222; padding: 1.5rem; border-radius: 8px;
+  border-left: 4px solid #00bcd4;
+  opacity: 0; animation: slideUp 0.6s ease-out forwards;
+}
+.simulator-stock:nth-child(1) { animation-delay: 0.45s; }
+.simulator-stock:nth-child(2) { animation-delay: 0.55s; }
+.simulator-stock:nth-child(3) { animation-delay: 0.65s; }
+.simulator-stock:nth-child(4) { animation-delay: 0.75s; }
+.simulator-stock:nth-child(5) { animation-delay: 0.85s; }
+.simulator-stock.negative { border-left-color: #ff6b6b; }
+.simulator-stock.positive { border-left-color: #51cf66; }
+.simulator-stock h4 {
+  margin: 0 0 0.5rem 0; color: #fff; font-size: 1rem;
+}
+.simulator-stock p {
+  margin: 0.3rem 0; color: #ccc; font-size: 0.95rem;
+}
+.simulator-stock .gain-amount {
+  font-weight: bold; font-size: 1.1rem; margin-top: 0.5rem;
+}
+.simulator-stock .gain-amount.positive { color: #51cf66; }
+.simulator-stock .gain-amount.negative { color: #ff6b6b; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ==================== CONTACT ==================== */
   background: #111; padding: 2rem; border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4); transition: transform 0.3s ease;
 }
