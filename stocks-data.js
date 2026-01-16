@@ -86,6 +86,15 @@ const stocksData = {
       stocks: { AVGO: 43.42, TSLA: 17.00, SPY: -2.41, AMD: -11.95, NVDA: 0, META: 0 }
     }
   },
+  2026: {
+    1: {
+      month: "January",
+      year: 2026,
+      prediction: "For January, I'm betting on AI to blast through the year: NVDA should lead continued compute momentum, while MU is positioned for a strong run as RAM demand surges from AI infrastructure buildout. RTX benefits from rising geopolitical tensions and increased defense spending, making it a solid play alongside the semis. AMD should also participate in the AI tailwinds. Overall, I'm bullish on semis, memory cyclicals, and defense into year-end.",
+      scorecard: null,
+      stocks: { NVDA: 0, MU: 0, RTX: 0, AMD: 0 }
+    }
+  },
   2025: {
     1: {
       month: "January",
@@ -167,9 +176,9 @@ const stocksData = {
     12: {
       month: "December",
       year: 2025,
-      prediction: "For December (month-to-date), I'm expecting NVDA and TSLA to finish positive, while AVGO is a realistic downside candidate (profit-taking after a very strong run). I expect SPY to be mildly positive—steady, not spectacular.",
-      scorecard: null,
-      stocks: { NVDA: 0, TSLA: 0, AVGO: 0, SPY: 0, META: 0, AMD: 0 }
+      prediction: "For December, NVDA and TSLA finished positive as expected, while AVGO was indeed a downside candidate—profit-taking after a very strong run came through. SPY was essentially flat, with META showing resilience and AMD struggling slightly.",
+      scorecard: { NVDA: 5.37, TSLA: 4.54, META: 1.87, SPY: -0.22, AMD: -1.55, AVGO: -14.11 },
+      stocks: { NVDA: 5.37, TSLA: 4.54, META: 1.87, SPY: -0.22, AMD: -1.55, AVGO: -14.11 }
     }
   }
 };
