@@ -400,3 +400,55 @@ if (document.readyState === "loading") {
 } else {
   initPortfolioSection();
 }
+
+/* ==================== SPOTIFY NOW PLAYING ==================== */
+function getSpotifyApiUrl() {
+  const meta = document.querySelector('meta[name="spotify-api"]');
+  return meta?.content?.trim() || "/api/now-playing";
+}
+
+function renderSpotifyBar(data) {
+  const bar = document.getElementById("spotify-bar");
+  if (!bar || !data?.track) return;
+
+  const art = document.getElementById("spotify-art");
+  const status = document.getElementById("spotify-status");
+  const track = document.getElementById("spotify-track");
+  const detail = document.getElementById("spotify-detail");
+  const link = document.getElementById("spotify-link");
+
+  if (art) {
+    art.src = data.albumImage || "";
+    art.alt = data.album ? `${data.album} cover` : "Album art";
+  }
+  if (status) {
+    status.textContent = data.isPlaying ? "Listening on Spotify" : "Last played on Spotify";
+  }
+  if (track) track.textContent = data.track;
+  if (detail) {
+    const albumPart = data.album ? ` · ${data.album}` : "";
+    detail.textContent = `${data.artist || "Unknown artist"}${albumPart}`;
+  }
+  if (link && data.url) link.href = data.url;
+
+  bar.classList.toggle("is-playing", Boolean(data.isPlaying));
+  bar.hidden = false;
+}
+
+async function fetchSpotifyNowPlaying() {
+  if (!document.getElementById("spotify-bar")) return;
+  const url = getSpotifyApiUrl();
+  if (!url) return;
+
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data?.track) renderSpotifyBar(data);
+  } catch {
+    /* API not deployed yet — bar stays hidden */
+  }
+}
+
+fetchSpotifyNowPlaying();
+setInterval(fetchSpotifyNowPlaying, 30_000);
