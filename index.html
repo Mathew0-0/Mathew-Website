@@ -17,7 +17,7 @@
         <li><a href="#about">About Me</a></li>
         <li><a href="#resume">Resume</a></li>
         <li><a href="#projects">Projects</a></li>
-        <li><a href="#stocks">Stocks</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
         <li><a href="#volunteer">Leadership</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -67,7 +67,7 @@
     <h2 class="slide-up">Resume</h2>
 
     <!-- Download button -->
-    <a class="btn resume-download" href="files/MathewsResume.pdf" download>
+    <a class="btn resume-download" href="files/Mathew_Lam_Resume.pdf" download="Mathew_Lam_Resume.pdf">
       Download Resume (PDF)
     </a>
 
@@ -75,28 +75,33 @@
     <div class="resume-grid">
       <article class="resume-card from-left">
         <h3>Education</h3>
-        <p><strong>University of Georgia</strong> — Athens, GA — B.B.A. Accounting; Minor in Computer Science | Jan. 2025 – Present | GPA: 3.83 | CPA licensure goal</p>
-        <p><strong>Georgia State University</strong> — Atlanta, GA — Coursework in Accounting, Finance, Computer Science, and Business (Transferred) | Aug. 2023 – Dec. 2024 | GPA: 3.93</p>
+        <p><strong>University of Georgia</strong> — Athens, GA — B.B.A. Accounting; Minor in Computer Science | Jan. 2025 – May 2028 | GPA: 3.83</p>
+        <p><strong>University of Hong Kong (HKU)</strong> — Exchange — Hong Kong — Coursework in Accounting, Finance, and Computer Science | Sept. 2026 – Dec. 2026</p>
+        <p><strong>Georgia State University</strong> — Atlanta, GA — Coursework in Accounting, Finance, and Computer Science (Transferred) | Aug. 2023 – Dec. 2024 | GPA: 3.93</p>
       </article>
 
       <article class="resume-card from-right">
         <h3>Experience</h3>
-        <p><strong>Chueng Kueng Holding Inc</strong> — Accounting & HR Assistant (Seasonal) — Atlanta, GA — Summer 2020 – Present</p>
-        <p><strong>Kumon Learning Center</strong> — Tutor & Data Entry Assistant — Johns Creek, GA — 2022 – 2023</p>
+        <p><strong>Crowe LLP</strong> — Federal Tax Consulting Intern — Atlanta, GA — June 2026 – Aug. 2026</p>
+        <p><strong>Cheung Kong Holding Inc.</strong> — Accounting &amp; HR Assistant (Seasonal) — Atlanta, GA — Summer 2020 – Summer 2025</p>
+        <p><strong>Kumon Learning Center</strong> — Tutor &amp; Data Entry Assistant — Johns Creek, GA — 2022 – 2023</p>
       </article>
 
       <article class="resume-card from-bottom">
         <h3>Projects</h3>
         <ul>
-          <li>Independent Resale and Investing — Excel, Financial Tracking, Market Analysis (2020 – Present) — $33K+ sales; stock portfolio ~$15K gains</li>
-          <li>Personal Portfolio & Finance Blog — HTML, CSS, JavaScript (2024 – Present) — monthly stock predictions, $1,000 paper-portfolio simulation</li>
-          <li>Fish-Based Market Indicator System — Python, OpenCV, Web Scraping, Market Data API (2023 – 2024)</li>
+          <li><strong>Algorithmic Market Screener</strong> — Python, yfinance, JavaScript, Data Analysis (2025 – Present) — Rule-based screener with momentum, RSI, and volume filters; walk-forward backtesting vs personal holdings and Nasdaq-100 (QQQ); NLP sentiment on news; GitHub Actions pipeline</li>
+          <li><strong>Independent Resale &amp; Investing</strong> — Excel, Financial Tracking, Market Analysis (2020 – Present) — Portfolio up 300% YTD; $33K+ cumulative resale sales; Excel ledger for revenue, COGS, fees, and net profit</li>
+          <li><strong>Personal Portfolio &amp; Finance Blog</strong> — HTML, CSS, JavaScript (2024 – Present) — Weekly market commentary and stock picks; $1,000 follower return tracking and live performance dashboard</li>
         </ul>
       </article>
 
       <article class="resume-card from-left">
         <h3>Skills</h3>
-        <p>Accounting & Analytics: Excel, Financial Tracking, Cash Flow Analysis, Reconciliations, Variance Review. Data & Tools: Tableau, Power BI, Microsoft Office Suite. Programming: Python, SQL, JavaScript, HTML/CSS, Java. Strengths: Accuracy, Documentation, Quantitative Analysis, Attention to Detail.</p>
+        <p><strong>Accounting &amp; Tax:</strong> Cost Segregation, Depreciation Analysis (MACRS, Bonus, Sec. 179), Form 3115 Workpapers, Sec. 481(a) Adjustments, Sec. 263A (UNICAP), DCNs, Accruals, Reconciliations, Variance Analysis, Bluebeam</p>
+        <p><strong>Data &amp; Analytics:</strong> Excel (Advanced), Tableau, Power BI, SQL, Financial Modeling, Cash Flow Analysis</p>
+        <p><strong>Programming:</strong> Python, JavaScript, HTML/CSS, Java</p>
+        <p><strong>Strengths:</strong> Accuracy, Documentation, Quantitative Analysis, Attention to Detail, Client Deliverable Preparation</p>
       </article>
 
       <article class="resume-card from-right">
@@ -121,85 +126,72 @@
   <section id="projects" class="content-section">
     <h2>Projects</h2>
     <div class="project-grid">
+      <!-- Algorithmic Market Screener -->
+      <div class="project-card slide-up">
+        <img src="images/images.jpeg" alt="Algorithmic Market Screener">
+        <h3>Algorithmic Market Screener</h3>
+        <p>Rule-based equity screener ranking a tracked universe for weekly top-3 candidates using momentum, RSI, and volume filters with walk-forward signals. Pulls data via Yahoo Finance (<code>yfinance</code>), backtests a $1,000 strategy against personal holdings and the Nasdaq-100 (QQQ), and uses NLP keyword scoring on financial news. Monthly GitHub Actions pipeline powers live tracking on this site.</p>
+      </div>
+
       <!-- Personal Portfolio & Finance Blog -->
       <div class="project-card slide-up">
         <img src="images/pompom.jpg" alt="Personal Portfolio & Finance Blog">
         <h3>Personal Portfolio & Finance Blog</h3>
-        <p>Built and deployed a personal website to publish finance content using HTML/CSS/JavaScript. Monthly stock predictions one month in advance, then updated with results and a $1,000 paper-portfolio simulation with performance charts.</p>
-        <div class="card-actions">
-          <a class="btn" href="https://github.com/Mathew0-0/Mathew-Website" target="_blank" rel="noopener">GitHub</a>
-        </div>
-      </div>
-
-      <!-- Fish-Based Market Indicator System -->
-      <div class="project-card slide-up">
-        <img src="images/images.jpeg" alt="Fish-Based Market Indicator System">
-        <h3>Fish-Based Market Indicator System</h3>
-        <p>Python project using a fish-tank camera feed (OpenCV) as a daily stock-selection rule for paper trading. Scraped Reddit for top tickers, assigned sides by tie-break rules, checked fish counts 3x/day, and used a market data API for EOD prices and portfolio valuation. Logged daily selections and outputs to CSV.</p>
-        <div class="card-actions">
-          <a class="btn" href="https://github.com/Mathew0-0/REPLACE_WITH_FISH_MARKET_REPO" target="_blank" rel="noopener">GitHub</a>
-        </div>
+        <p>Published weekly market commentary and stock picks with documented rationale. Tracks win/loss across calls and displays cumulative return a $1,000 follower would have generated — plus AI screener vs. personal holdings comparisons with equity curves and benchmark analysis.</p>
       </div>
 
       <!-- Independent Resale and Investing -->
       <div class="project-card slide-up">
         <img src="images/mocha.jpg" alt="Independent Resale and Investing">
-        <h3>Independent Resale and Investing</h3>
-        <p>Generated <strong>$33K+</strong> in cumulative sales through resale of trading cards, consumer electronics, and footwear; Excel ledger for revenue, costs, and net profit. Expanded into personal equity investing with a stock portfolio generating approximately <strong>$15K</strong> in cumulative gains.</p>
+        <h3>Independent Resale & Investing</h3>
+        <p>Built and managed a personal equity portfolio up <strong>300% YTD</strong>, with documented return calculations and investment rationale for each position. Generated <strong>$33K+</strong> in cumulative sales through resale of trading cards, consumer electronics, and footwear. Maintained a detailed Excel ledger tracking revenue, COGS, platform fees, shipping, and net profit by category.</p>
       </div>
     </div>
   </section>
 
-  <!-- ==================== STOCKS SECTION ==================== -->
-  <section id="stocks" class="content-section">
-    <h2 class="slide-up">Stocks (2023 – Present)</h2>
+  <!-- ==================== PORTFOLIO & SCREENER SECTION ==================== -->
+  <section id="portfolio" class="content-section">
+    <h2 class="slide-up">Portfolio & Market Screener (2023 – Present)</h2>
 
-    <!-- Year & Month Selector -->
-    <div class="stocks-controls">
-      <div class="control-group">
-        <label for="year-select">Year:</label>
-        <select id="year-select">
-          <option value="2023">2023</option>
-          <option value="2024">2024</option>
-          <option value="2025">2025</option>
-          <option value="2026">2026</option>
-        </select>
+    <!-- AI vs Manual strategy comparison -->
+    <div class="strategy-comparison slide-up" id="strategy-comparison">
+      <h3 id="strategy-comparison-title">AI Screener vs My Holdings</h3>
+      <div class="stocks-controls strategy-period-controls">
+        <div class="control-group">
+          <label for="strategy-period-select">Period:</label>
+          <select id="strategy-period-select"></select>
+        </div>
       </div>
-      <div class="control-group">
-        <label for="month-select">Month:</label>
-        <select id="month-select">
-          <option value="1">January</option>
-          <option value="2">February</option>
-          <option value="3">March</option>
-          <option value="4">April</option>
-          <option value="5">May</option>
-          <option value="6">June</option>
-          <option value="7">July</option>
-          <option value="8">August</option>
-          <option value="9">September</option>
-          <option value="10">October</option>
-          <option value="11">November</option>
-          <option value="12">December</option>
-        </select>
+      <p class="strategy-verdict muted" id="strategy-verdict"></p>
+      <div class="stocks-kpis" id="strategy-kpis"></div>
+      <div class="chart-container strategy-chart">
+        <h3 id="strategy-chart-title">$1,000 Growth — AI vs My Holdings vs Nasdaq-100</h3>
+        <canvas id="strategyCompareChart"></canvas>
       </div>
-    </div>
-
-    <!-- What I bought and why (selected month) -->
-    <div class="selected-trade slide-up" id="selected-trade"></div>
-
-    <!-- Charts -->
-    <div class="stocks-split">
-      <div class="chart-container">
-        <h3 id="profits-by-company-title">Profits by Company (stacked)</h3>
-        <canvas id="profitsByCompanyChart"></canvas>
+      <div class="strategy-details">
+        <div class="strategy-card" id="ai-strategy-card"></div>
+        <div class="strategy-card" id="manual-strategy-card"></div>
       </div>
-
-      <div class="chart-container">
-        <h3 id="buy-sell-title">Buy → Sell Price (selected month)</h3>
-        <canvas id="buySellChart"></canvas>
+      <div class="stocks-log">
+        <h3>Monthly Returns — AI vs Manual</h3>
+        <div class="stocks-table-wrap">
+          <table class="stocks-table">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>AI Top 3</th>
+                <th>AI Return</th>
+                <th>AI Balance</th>
+                <th>My Holdings</th>
+                <th>Manual Return</th>
+                <th>Manual Balance</th>
+              </tr>
+            </thead>
+            <tbody id="strategy-table-body"></tbody>
+          </table>
+        </div>
       </div>
     </div>
-
   </section>
 
   <!-- ==================== VOLUNTEER SECTION ==================== -->
@@ -209,7 +201,7 @@
     <div class="resume-grid">
       <article class="resume-card from-left">
         <h3>Asian American Student Organization (UGA) — Logistics Chair</h3>
-        <p>Athens, GA — Jan. 2025 – May 2025. Coordinated logistics for events serving 30–40 members, including scheduling, space planning, and materials. Assisted with basic budget tracking to keep events within allocated funding.</p>
+        <p>Athens, GA — Jan. 2025 – May 2025. Coordinated logistics for events serving 30–40 members, including scheduling, venue coordination, and materials management. Managed budget tracking to keep events within allocated funding and maintained accurate expense records.</p>
       </article>
 
       <article class="resume-card from-right">
@@ -232,7 +224,7 @@
 
   <!-- ==================== SCRIPTS ==================== -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="stocks-data.js"></script>
+  <script src="portfolio-data.js"></script>
   <script src="script.js"></script>
   <div id="popup" class="popup">Thank you! Your message has been sent.</div>
 </body>

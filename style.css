@@ -144,7 +144,122 @@ body {
 .contact-container { display: flex; justify-content: center; align-items: stretch; gap: 3rem; flex-wrap: wrap; }
 
 
-/* ==================== STOCKS ==================== */
+/* ==================== PORTFOLIO & SCREENER ==================== */
+.portfolio-intro {
+  max-width: 720px;
+  color: #aaa;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+}
+.portfolio-intro code {
+  background: #222;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  color: #00bcd4;
+  font-size: 0.9rem;
+}
+
+.strategy-period-controls {
+  margin: 0 0 1rem;
+}
+.strategy-comparison {
+  margin: 2rem 0 2.5rem;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+}
+.strategy-comparison.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.strategy-comparison > h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.35rem;
+}
+.strategy-verdict {
+  margin: 0 0 1.25rem;
+  max-width: 900px;
+  line-height: 1.6;
+}
+.strategy-verdict strong {
+  color: #00bcd4;
+}
+.strategy-chart {
+  margin: 1.5rem 0;
+  min-height: 320px;
+}
+.strategy-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+@media (max-width: 768px) {
+  .strategy-details { grid-template-columns: 1fr; }
+}
+.strategy-card {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+}
+.strategy-card h4 {
+  margin: 0 0 0.5rem;
+  color: #00bcd4;
+}
+.strategy-rules {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+  color: #bbb;
+  line-height: 1.7;
+}
+.strategy-rules li { margin-bottom: 0.35rem; }
+
+.screener-picks {
+  margin: 1.5rem 0;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+}
+.screener-picks.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.screener-picks h3 {
+  margin: 0 0 1rem 0;
+  color: #fff;
+}
+.screener-picks .simulator-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.screener-picks .simulator-stock {
+  opacity: 1;
+  animation: none;
+}
+
+.stocks-kpis {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+.stocks-kpis.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stocks-log {
+  margin-top: 2.5rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+.stocks-log.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .stocks-controls {
   display: flex; gap: 2rem; margin: 2rem 0; flex-wrap: wrap;
   align-items: center;
@@ -358,8 +473,10 @@ body {
   transition: all 0.8s ease-out;
   overflow: visible;
 }
-#profitsByCompanyChart,
-#buySellChart {
+#equityCurveChart,
+#tickerPLChart,
+#priceSeriesChart,
+#screenerScoresChart {
   width: 100% !important;
   height: 380px !important;
   display: block;
@@ -420,9 +537,14 @@ body {
   to { opacity: 1; }
 }
 
-/* ==================== CONTACT ==================== */
-  background: #111; padding: 2rem; border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4); transition: transform 0.3s ease;
+/* ==================== CONTACT (form styles) ==================== */
+.contact-form,
+.contact-info {
+  background: #111;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
 }
 .contact-form:hover, .contact-info:hover { transform: translateY(-5px); }
 
