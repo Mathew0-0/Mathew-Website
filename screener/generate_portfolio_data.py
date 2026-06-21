@@ -25,6 +25,8 @@ FOLLOWER_START = 1000.0
 PORTFOLIO_START = 2000.0
 BENCHMARK_TICKER = "QQQ"
 BENCHMARK_NAME = "Nasdaq-100 (QQQ)"
+ALGO_STRATEGY_NAME = "Algorithm-Based Screener (Top 3)"
+ALGO_STRATEGY_SHORT = "Algorithm-based screener"
 STATS_WINDOW_MONTHS = 12
 
 # Two-year AI vs manual comparison window (Jun 2024 → present)
@@ -60,17 +62,6 @@ COMPARISON_PERIODS = [
     {"id": "jan25_jan26", "label": "Jan 2025 – Jan 2026", "startYm": "2025-01", "endYm": "2026-01"},
     {"id": "jun24_jan25", "label": "Jun 2024 – Jan 2025", "startYm": "2024-06", "endYm": "2025-01"},
 ]
-
-SENTIMENT_KEYWORDS = {
-    "positive": [
-        "beat", "surge", "rally", "upgrade", "record", "growth", "strong",
-        "outperform", "bullish", "gain", "profit", "revenue", "breakout",
-    ],
-    "negative": [
-        "miss", "fall", "drop", "downgrade", "weak", "loss", "cut",
-        "bearish", "decline", "lawsuit", "investigation", "warning",
-    ],
-}
 
 # Historical monthly trades (buy → sell, one position per month)
 TRADE_HISTORY = [
@@ -125,29 +116,6 @@ def compute_rsi(series: pd.Series, period: int = 14) -> float:
     rsi = 100 - (100 / (1 + rs))
     val = rsi.iloc[-1]
     return round(float(val), 1) if pd.notna(val) else float("nan")
-
-
-def sentiment_score(ticker: str) -> float:
-    """NLP keyword scoring on recent Yahoo Finance headlines (0–100)."""
-    try:
-        news = yf.Ticker(ticker).news or []
-    except Exception:
-        news = []
-    if not news:
-        return 50.0
-    pos = neg = 0
-    for item in news[:8]:
-        title = (item.get("title") or "").lower()
-        for kw in SENTIMENT_KEYWORDS["positive"]:
-            if kw in title:
-                pos += 1
-        for kw in SENTIMENT_KEYWORDS["negative"]:
-            if kw in title:
-                neg += 1
-    total = pos + neg
-    if total == 0:
-        return 50.0
-    return round(50 + 50 * (pos - neg) / total, 1)
 
 
 def screen_ticker_at_date(
@@ -247,7 +215,6 @@ def rank_universe(
     close_df: pd.DataFrame,
     vol_df: pd.DataFrame,
     as_of: pd.Timestamp,
-    include_sentiment: bool = False,
 ) -> list[dict]:
     ranked = []
     for ticker in SCREENER_UNIVERSE:
@@ -256,11 +223,7 @@ def rank_universe(
         metrics = screen_ticker_at_date(close_df[ticker], vol_df[ticker], as_of)
         if not metrics:
             continue
-        entry = {"ticker": ticker, **metrics}
-        if include_sentiment:
-            entry["sentiment"] = sentiment_score(ticker)
-            entry["score"] = round(entry["score"] * 0.7 + entry["sentiment"] * 0.3, 1)
-        ranked.append(entry)
+        ranked.append({"ticker": ticker, **metrics})
     ranked.sort(key=lambda x: x["score"], reverse=True)
     for i, p in enumerate(ranked[:3], 1):
         p["rank"] = i
@@ -574,7 +537,7 @@ def build_period_comparison(
             "startingCapital": FOLLOWER_START,
         },
         "aiStrategy": {
-            "name": "AI Screener (Top 3)",
+            "name": ALGO_STRATEGY_NAME,
             "description": (
                 "Each month, rank the tracked universe using prior-month momentum, RSI, "
                 "and volume data. Invest 33.3% in each of the top 3 picks; rebalance monthly."
@@ -608,7 +571,7 @@ def build_period_comparison(
             "winner": winner,
             "marginDollars": margin,
             "summary": (
-                f"AI screener turned $1,000 into ${ai_end:,.2f} ({ai_return:+.2f}%) vs "
+                f"{ALGO_STRATEGY_SHORT.capitalize()} turned $1,000 into ${ai_end:,.2f} ({ai_return:+.2f}%) vs "
                 f"your holdings at ${manual_end:,.2f} ({manual_return:+.2f}%) over "
                 f"{ym_label(start_ym)}–{ym_label(end_ym)}."
             ),
@@ -682,10 +645,9 @@ def top_picks_for_month(
     vol_df: pd.DataFrame,
     ym: str,
     executed_ticker: str,
-    include_sentiment: bool = False,
 ) -> list[dict]:
     as_of = as_of_prev_month(close_df, ym)
-    top3 = rank_universe(close_df, vol_df, as_of, include_sentiment=include_sentiment)
+    top3 = rank_universe(close_df, vol_df, as_of)
 
     if executed_ticker and not any(p["ticker"] == executed_ticker for p in top3):
         executed_metrics = screen_ticker_at_date(
@@ -723,12 +685,10 @@ def directional_correct(picks: list[dict], trade: dict, close_df: pd.DataFrame) 
 def build_output(close_df: pd.DataFrame, vol_df: pd.DataFrame) -> dict:
     monthly_reports = []
 
-    for i, trade in enumerate(TRADE_HISTORY):
+    for trade in TRADE_HISTORY:
         ym = trade["ym"]
-        is_latest = i == len(TRADE_HISTORY) - 1
         picks = top_picks_for_month(
             close_df, vol_df, ym, trade["ticker"],
-            include_sentiment=is_latest,
         )
         monthly_reports.append({
             "ym": ym,
@@ -756,7 +716,6 @@ def build_output(close_df: pd.DataFrame, vol_df: pd.DataFrame) -> dict:
                 "momentum": "20-day return > 0%",
                 "rsi": "30–70 range",
                 "volume": "≥ 80% of 20-day average",
-                "sentiment": "NLP keyword scoring on news headlines (latest month)",
                 "walkForward": "Signals use prior-month close (no look-ahead)",
             },
         },
@@ -814,7 +773,7 @@ def main() -> None:
         period = full.get("period", {})
         print(
             f"Full comparison ({period.get('startLabel', '')}–{period.get('endLabel', '')}): "
-            f"AI ${ai.get('endBalance', 0):,.2f} ({ai.get('returnPct', 0):+.2f}%) vs "
+            f"Algo ${ai.get('endBalance', 0):,.2f} ({ai.get('returnPct', 0):+.2f}%) vs "
             f"Manual ${manual.get('endBalance', 0):,.2f} ({manual.get('returnPct', 0):+.2f}%) vs "
             f"{BENCHMARK_NAME} ${full.get('benchmark', {}).get('endBalance', 0):,.2f} | "
             f"Winner: {verdict.get('winner', 'n/a')}"

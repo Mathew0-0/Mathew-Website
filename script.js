@@ -172,18 +172,18 @@ function renderStrategyComparison() {
 
   const titleEl = document.getElementById("strategy-comparison-title");
   if (titleEl) {
-    titleEl.textContent = `AI Screener vs My Holdings — ${period.startLabel}–${period.endLabel}`;
+    titleEl.textContent = `Algorithm-Based Screener vs My Holdings — ${period.startLabel}–${period.endLabel}`;
   }
 
   const chartTitle = document.getElementById("strategy-chart-title");
   if (chartTitle) {
-    chartTitle.textContent = `$1,000 Growth — AI vs My Holdings vs ${benchLabel}`;
+    chartTitle.textContent = `$1,000 Growth — Algorithm-Based vs My Holdings vs ${benchLabel}`;
   }
 
   const verdictEl = document.getElementById("strategy-verdict");
   if (verdictEl) {
     const winnerLabel = verdict.winner === "ai"
-      ? "AI screener wins"
+      ? "Algorithm-based screener wins"
       : verdict.winner === "manual"
         ? "Your holdings win"
         : "Tie";
@@ -269,7 +269,7 @@ function renderStrategyChart(cmp, benchLabel) {
       labels,
       datasets: [
         {
-          label: "AI Screener",
+          label: "Algorithm-Based Screener",
           data: ai.map(r => r.value),
           borderColor: "#00bcd4",
           backgroundColor: "rgba(0, 188, 212, 0.08)",
