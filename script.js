@@ -3,7 +3,7 @@ function revealOnScroll() {
   const triggerBottom = window.innerHeight * 0.8;
 
   document.querySelectorAll(
-    ".project-card, .about-text, .about-slide, .resume-card, .selected-trade, .chart-container, .screener-picks, .stocks-kpis, .stocks-log, .strategy-comparison"
+    ".project-card, .about-text, .about-slide, .resume-card, .selected-trade, .chart-container, .screener-picks, .stocks-kpis, .stocks-log, .strategy-comparison, .strategy-monthly-split"
   ).forEach(el => {
     const rect = el.getBoundingClientRect();
 
@@ -158,12 +158,25 @@ function populateStrategyPeriodSelect() {
   }
 }
 
+function getAlgoStrategy(cmp) {
+  return cmp.algoStrategy ?? cmp.aiStrategy;
+}
+
+function fmtAxisMoney(n) {
+  const v = Number(n);
+  const abs = Math.abs(v);
+  if (abs >= 1_000_000) return `$${(v / 1_000_000).toFixed(1)}M`;
+  if (abs >= 10_000) return `$${Math.round(v / 1000)}k`;
+  if (abs >= 1_000) return `$${(v / 1000).toFixed(1)}k`;
+  return `$${Math.round(v)}`;
+}
+
 function renderStrategyComparison() {
   const cmp = getActiveStrategyPeriod();
   const root = document.getElementById("strategy-comparison");
   if (!cmp || !root) return;
 
-  const ai = cmp.aiStrategy;
+  const algo = getAlgoStrategy(cmp);
   const manual = cmp.manualStrategy;
   const bench = cmp.benchmark;
   const period = cmp.period;
@@ -182,7 +195,7 @@ function renderStrategyComparison() {
 
   const verdictEl = document.getElementById("strategy-verdict");
   if (verdictEl) {
-    const winnerLabel = verdict.winner === "ai"
+    const winnerLabel = verdict.winner === "algo" || verdict.winner === "ai"
       ? "Algorithm-based screener wins"
       : verdict.winner === "manual"
         ? "Your holdings win"
@@ -197,9 +210,9 @@ function renderStrategyComparison() {
   if (kpis) {
     kpis.innerHTML = `
       <div class="stocks-kpi">
-        <div class="stocks-kpi-label">${ai.name}</div>
-        <div class="stocks-kpi-value ${clsPosNeg(ai.returnPct)}">${fmtMoney(ai.endBalance)}</div>
-        <div class="muted">${fmtPct(ai.returnPct)} · Top 3 @ 33% each</div>
+        <div class="stocks-kpi-label">${algo.name}</div>
+        <div class="stocks-kpi-value ${clsPosNeg(algo.returnPct)}">${fmtMoney(algo.endBalance)}</div>
+        <div class="muted">${fmtPct(algo.returnPct)} · Top 3 @ 33% each</div>
       </div>
       <div class="stocks-kpi">
         <div class="stocks-kpi-label">${manual.name}</div>
@@ -219,11 +232,11 @@ function renderStrategyComparison() {
     `;
   }
 
-  const aiCard = document.getElementById("ai-strategy-card");
-  if (aiCard) {
-    aiCard.innerHTML = `
-      <h4>${ai.name}</h4>
-      <p class="muted">${ai.description}</p>
+  const algoCard = document.getElementById("algo-strategy-card");
+  if (algoCard) {
+    algoCard.innerHTML = `
+      <h4>${algo.name}</h4>
+      <p class="muted">${algo.description}</p>
       <ul class="strategy-rules">
         <li>Momentum: 20-day return &gt; 0%</li>
         <li>RSI: 30–70 range</li>
@@ -257,10 +270,11 @@ function renderStrategyChart(cmp, benchLabel) {
   const canvas = document.getElementById("strategyCompareChart");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
-  const ai = cmp.aiStrategy.equityCurve ?? [];
+  const algo = getAlgoStrategy(cmp);
+  const algoCurve = algo?.equityCurve ?? [];
   const manual = cmp.manualStrategy.equityCurve ?? [];
   const bench = cmp.benchmark.equityCurve ?? [];
-  const labels = ai.map(r => r.label);
+  const labels = algoCurve.map(r => r.label);
 
   if (strategyCompareChart) strategyCompareChart.destroy();
   strategyCompareChart = new Chart(ctx, {
@@ -269,8 +283,8 @@ function renderStrategyChart(cmp, benchLabel) {
       labels,
       datasets: [
         {
-          label: "Algorithm-Based Screener",
-          data: ai.map(r => r.value),
+          label: "Algorithm-Based",
+          data: algoCurve.map(r => r.value),
           borderColor: "#00bcd4",
           backgroundColor: "rgba(0, 188, 212, 0.08)",
           borderWidth: 2.5,
@@ -297,46 +311,60 @@ function renderStrategyChart(cmp, benchLabel) {
         }
       ]
     },
-    options: chartOptions(fmtMoney)
+    options: chartOptions(fmtMoney, fmtAxisMoney)
   });
 }
 
 function renderStrategyTable(cmp) {
-  const tbody = document.getElementById("strategy-table-body");
-  if (!tbody) return;
+  const algoBody = document.getElementById("algo-table-body");
+  const manualBody = document.getElementById("manual-table-body");
+  if (!algoBody || !manualBody) return;
 
-  const aiByYm = new Map((cmp.aiStrategy.monthlyReports ?? []).map(r => [r.ym, r]));
+  const algo = getAlgoStrategy(cmp);
+  const algoByYm = new Map((algo?.monthlyReports ?? []).map(r => [r.ym, r]));
   const manualByYm = new Map((cmp.manualStrategy.monthlyReports ?? []).map(r => [r.ym, r]));
-  const months = [...aiByYm.keys()].reverse();
+  const months = [...algoByYm.keys()].reverse();
 
-  tbody.innerHTML = months.map(ym => {
-    const ai = aiByYm.get(ym);
-    const manual = manualByYm.get(ym);
-    const aiPicks = (ai?.picks ?? []).map(p => p.ticker).join(", ") || "—";
-    const manualHoldings = (manual?.holdings ?? [])
+  algoBody.innerHTML = months.map(ym => {
+    const row = algoByYm.get(ym);
+    const picks = (row?.picks ?? []).map(p => p.ticker).join(", ") || "—";
+    return `
+      <tr>
+        <td>${row?.monthLabel ?? ym}</td>
+        <td>${picks}</td>
+        <td class="${clsPosNeg(row?.returnPct ?? 0)}">${fmtPct(row?.returnPct ?? 0)}</td>
+        <td>${fmtMoney(row?.balance ?? 0)}</td>
+      </tr>
+    `;
+  }).join("");
+
+  manualBody.innerHTML = months.map(ym => {
+    const row = manualByYm.get(ym);
+    const holdings = (row?.holdings ?? [])
       .map(h => `${(h.actualWeight * 100).toFixed(1)}% ${h.ticker}`)
       .join(" · ") || "—";
     return `
       <tr>
-        <td>${ai?.monthLabel ?? ym}</td>
-        <td>${aiPicks}</td>
-        <td class="${clsPosNeg(ai?.returnPct ?? 0)}">${fmtPct(ai?.returnPct ?? 0)}</td>
-        <td>${fmtMoney(ai?.balance ?? 0)}</td>
-        <td>${manualHoldings}</td>
-        <td class="${clsPosNeg(manual?.returnPct ?? 0)}">${fmtPct(manual?.returnPct ?? 0)}</td>
-        <td>${fmtMoney(manual?.balance ?? 0)}</td>
+        <td>${row?.monthLabel ?? ym}</td>
+        <td>${holdings}</td>
+        <td class="${clsPosNeg(row?.returnPct ?? 0)}">${fmtPct(row?.returnPct ?? 0)}</td>
+        <td>${fmtMoney(row?.balance ?? 0)}</td>
       </tr>
     `;
   }).join("");
 }
 
-function chartOptions(yFormat) {
+function chartOptions(yFormat, axisFormat) {
+  const axis = axisFormat ?? yFormat;
   return {
     responsive: true,
     maintainAspectRatio: false,
     animation: { duration: 600 },
+    layout: {
+      padding: { left: 16, right: 24, top: 12, bottom: 12 }
+    },
     plugins: {
-      legend: { labels: { color: "#ccc" } },
+      legend: { labels: { color: "#ccc", boxWidth: 12, padding: 14 } },
       tooltip: {
         backgroundColor: "rgba(0,0,0,0.85)",
         borderColor: "#00bcd4",
@@ -349,9 +377,18 @@ function chartOptions(yFormat) {
       }
     },
     scales: {
-      x: { ticks: { color: "#ccc", maxTicksLimit: 8 }, grid: { display: false } },
+      x: {
+        ticks: { color: "#ccc", maxTicksLimit: 8, autoSkip: true, maxRotation: 0 },
+        grid: { display: false }
+      },
       y: {
-        ticks: { color: "#ccc", callback: v => yFormat(Number(v)) },
+        grace: "8%",
+        ticks: {
+          color: "#ccc",
+          maxTicksLimit: 6,
+          padding: 6,
+          callback: v => axis(Number(v))
+        },
         grid: { color: "rgba(255,255,255,0.08)" }
       }
     }

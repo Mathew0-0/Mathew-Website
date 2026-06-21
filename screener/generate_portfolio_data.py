@@ -25,11 +25,11 @@ FOLLOWER_START = 1000.0
 PORTFOLIO_START = 2000.0
 BENCHMARK_TICKER = "QQQ"
 BENCHMARK_NAME = "Nasdaq-100 (QQQ)"
-ALGO_STRATEGY_NAME = "Algorithm-Based Screener (Top 3)"
+ALGO_STRATEGY_NAME = "Algorithm-Based (Top 3)"
 ALGO_STRATEGY_SHORT = "Algorithm-based screener"
 STATS_WINDOW_MONTHS = 12
 
-# Two-year AI vs manual comparison window (Jun 2024 → present)
+# Two-year algorithm vs manual comparison window (Jun 2024 → present)
 # Tickers traded historically + screener universe (liquid large/mid caps)
 SCREENER_UNIVERSE = sorted(
     {
@@ -524,7 +524,7 @@ def build_period_comparison(
     spy_end = spy_curve[-1]["value"] if spy_curve else FOLLOWER_START
     ai_return = round((ai_end / FOLLOWER_START - 1) * 100, 2)
     manual_return = round((manual_end / FOLLOWER_START - 1) * 100, 2)
-    winner = "ai" if ai_end > manual_end else "manual" if manual_end > ai_end else "tie"
+    winner = "algo" if ai_end > manual_end else "manual" if manual_end > ai_end else "tie"
     margin = round(abs(ai_end - manual_end), 2)
 
     return {
@@ -536,7 +536,7 @@ def build_period_comparison(
             "endLabel": ym_label(end_ym),
             "startingCapital": FOLLOWER_START,
         },
-        "aiStrategy": {
+        "algoStrategy": {
             "name": ALGO_STRATEGY_NAME,
             "description": (
                 "Each month, rank the tracked universe using prior-month momentum, RSI, "
@@ -762,18 +762,18 @@ def main() -> None:
     st = data.get("stats12m", {})
     cmp_ = data.get("strategyComparison") or {}
     full = (cmp_.get("periods") or {}).get("full", {})
-    ai = full.get("aiStrategy", {})
+    algo = full.get("algoStrategy", {})
     manual = full.get("manualStrategy", {})
     verdict = full.get("verdict", {})
     print(
         f"Done — 12M my win {st.get('myWinRate')}% | screener win {st.get('screenerWinRate')}% | "
         f"my dir {st.get('myDirectionalAccuracy')}% | screener dir {st.get('screenerDirectionalAccuracy')}%"
     )
-    if ai and manual:
+    if algo and manual:
         period = full.get("period", {})
         print(
             f"Full comparison ({period.get('startLabel', '')}–{period.get('endLabel', '')}): "
-            f"Algo ${ai.get('endBalance', 0):,.2f} ({ai.get('returnPct', 0):+.2f}%) vs "
+            f"Algo ${algo.get('endBalance', 0):,.2f} ({algo.get('returnPct', 0):+.2f}%) vs "
             f"Manual ${manual.get('endBalance', 0):,.2f} ({manual.get('returnPct', 0):+.2f}%) vs "
             f"{BENCHMARK_NAME} ${full.get('benchmark', {}).get('endBalance', 0):,.2f} | "
             f"Winner: {verdict.get('winner', 'n/a')}"

@@ -169,26 +169,41 @@
         <canvas id="strategyCompareChart"></canvas>
       </div>
       <div class="strategy-details">
-        <div class="strategy-card" id="ai-strategy-card"></div>
+        <div class="strategy-card" id="algo-strategy-card"></div>
         <div class="strategy-card" id="manual-strategy-card"></div>
       </div>
-      <div class="stocks-log">
-        <h3>Monthly Returns — Algorithm-Based vs Manual</h3>
-        <div class="stocks-table-wrap">
-          <table class="stocks-table">
-            <thead>
-              <tr>
-                <th>Month</th>
-                <th>Screener Top 3</th>
-                <th>Screener Return</th>
-                <th>Screener Balance</th>
-                <th>My Holdings</th>
-                <th>Manual Return</th>
-                <th>Manual Balance</th>
-              </tr>
-            </thead>
-            <tbody id="strategy-table-body"></tbody>
-          </table>
+      <div class="strategy-monthly-split">
+        <div class="stocks-log">
+          <h3>Algorithm-Based — Monthly Returns</h3>
+          <div class="stocks-table-wrap">
+            <table class="stocks-table">
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Top 3</th>
+                  <th>Return</th>
+                  <th>Balance</th>
+                </tr>
+              </thead>
+              <tbody id="algo-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="stocks-log">
+          <h3>My Holdings — Monthly Returns</h3>
+          <div class="stocks-table-wrap">
+            <table class="stocks-table">
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Holdings</th>
+                  <th>Return</th>
+                  <th>Balance</th>
+                </tr>
+              </thead>
+              <tbody id="manual-table-body"></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
