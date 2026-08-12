@@ -28,6 +28,10 @@ BENCHMARK_NAME = "Nasdaq-100 (QQQ)"
 ALGO_STRATEGY_NAME = "Algorithm-Based (Top 3)"
 ALGO_STRATEGY_SHORT = "Algorithm-based screener"
 MANUAL_STRATEGY_NAME = "My Recommendation Holdings"
+MANUAL_STRATEGY_DISCLAIMER = (
+    "Disclaimer: Illustrative recommendations only — not financial advice. "
+    "Hold positions for at least one year where possible; do not sell early to avoid short-term capital gains tax."
+)
 STATS_WINDOW_MONTHS = 12
 
 # Two-year algorithm vs manual comparison window (Jun 2024 → present)
@@ -569,6 +573,7 @@ def build_period_comparison(
                 "winners grow. Jun 2024 started 70% AMD / 30% NVDA; Jun 2025 started "
                 "90% MU / 5% WDC / 5% SNDK. No rebalancing within a phase."
             ),
+            "disclaimer": MANUAL_STRATEGY_DISCLAIMER,
             "phases": MANUAL_HOLDINGS,
             "endBalance": manual_end,
             "returnPct": manual_return,

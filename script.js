@@ -257,10 +257,15 @@ function renderStrategyComparison() {
       const range = p.toYm ? `${p.fromYm} → ${p.toYm}` : `${p.fromYm} → present`;
       return `<li><strong>${p.label}</strong> (${range}): started ${weights}</li>`;
     }).join("");
+    const disclaimer = manual.disclaimer || (
+      "Disclaimer: Illustrative recommendations only — not financial advice. "
+      + "Hold positions for at least one year where possible; do not sell early to avoid short-term capital gains tax."
+    );
     manualCard.innerHTML = `
       <h4>${manual.name}</h4>
       <p class="muted">${manual.description}</p>
       <ul class="strategy-rules">${phases}</ul>
+      <p class="strategy-disclaimer">${disclaimer}</p>
     `;
   }
 
