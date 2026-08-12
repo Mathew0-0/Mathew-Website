@@ -27,6 +27,7 @@ BENCHMARK_TICKER = "QQQ"
 BENCHMARK_NAME = "Nasdaq-100 (QQQ)"
 ALGO_STRATEGY_NAME = "Algorithm-Based (Top 3)"
 ALGO_STRATEGY_SHORT = "Algorithm-based screener"
+MANUAL_STRATEGY_NAME = "My Recommendation Holdings"
 STATS_WINDOW_MONTHS = 12
 
 # Two-year algorithm vs manual comparison window (Jun 2024 → present)
@@ -56,9 +57,8 @@ MANUAL_HOLDINGS = [
     },
 ]
 
-COMPARISON_PERIODS = [
+FIXED_COMPARISON_PERIODS = [
     {"id": "full", "label": "Jun 2024 – Present", "startYm": "2024-06", "endYm": None},
-    {"id": "ytd2026", "label": "YTD 2026 (Jan–Jun)", "startYm": "2026-01", "endYm": None},
     {"id": "jan25_jan26", "label": "Jan 2025 – Jan 2026", "startYm": "2025-01", "endYm": "2026-01"},
     {"id": "jun24_jan25", "label": "Jun 2024 – Jan 2025", "startYm": "2024-06", "endYm": "2025-01"},
 ]
@@ -169,6 +169,21 @@ def month_start(ym: str) -> pd.Timestamp:
 
 def ym_label(ym: str) -> str:
     return datetime.strptime(ym, "%Y-%m").strftime("%b %Y")
+
+
+def month_abbrev(ym: str) -> str:
+    return datetime.strptime(ym, "%Y-%m").strftime("%b")
+
+
+def build_comparison_periods(end_ym: str) -> list[dict]:
+    """Build period list with a YTD option whose label tracks the current month."""
+    year = end_ym[:4]
+    ytd_label = f"YTD {year} (Jan–{month_abbrev(end_ym)})"
+    return [
+        *FIXED_COMPARISON_PERIODS[:1],
+        {"id": f"ytd{year}", "label": ytd_label, "startYm": f"{year}-01", "endYm": None},
+        *FIXED_COMPARISON_PERIODS[1:],
+    ]
 
 
 def iter_months(start_ym: str, end_ym: str) -> list[str]:
@@ -548,7 +563,7 @@ def build_period_comparison(
             "monthlyReports": ai_monthly,
         },
         "manualStrategy": {
-            "name": "Mathew's Holdings",
+            "name": MANUAL_STRATEGY_NAME,
             "description": (
                 "Initial allocation at each phase start only — weights drift naturally as "
                 "winners grow. Jun 2024 started 70% AMD / 30% NVDA; Jun 2025 started "
@@ -572,7 +587,7 @@ def build_period_comparison(
             "marginDollars": margin,
             "summary": (
                 f"{ALGO_STRATEGY_SHORT.capitalize()} turned $1,000 into ${ai_end:,.2f} ({ai_return:+.2f}%) vs "
-                f"your holdings at ${manual_end:,.2f} ({manual_return:+.2f}%) over "
+                f"{MANUAL_STRATEGY_NAME} at ${manual_end:,.2f} ({manual_return:+.2f}%) over "
                 f"{ym_label(start_ym)}–{ym_label(end_ym)}."
             ),
         },
@@ -583,7 +598,7 @@ def build_strategy_comparison(close_df: pd.DataFrame, vol_df: pd.DataFrame) -> d
     end_ym = comparison_end_ym(close_df)
     periods: dict[str, dict] = {}
 
-    for spec in COMPARISON_PERIODS:
+    for spec in build_comparison_periods(end_ym):
         period_end = spec["endYm"] or end_ym
         if period_end < spec["startYm"]:
             continue

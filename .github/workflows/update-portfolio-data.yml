@@ -4,6 +4,8 @@ on:
   schedule:
     # Every Monday 14:00 UTC (~9am ET)
     - cron: "0 14 * * 1"
+    # 1st of each month — refresh YTD period label and latest month data
+    - cron: "0 14 1 * *"
   workflow_dispatch:
 
 permissions:

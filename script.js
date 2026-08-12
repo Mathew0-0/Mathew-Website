@@ -183,14 +183,16 @@ function renderStrategyComparison() {
   const verdict = cmp.verdict;
   const benchLabel = bench.name || "Nasdaq-100 (QQQ)";
 
+  const manualName = manual.name || "My Recommendation Holdings";
+
   const titleEl = document.getElementById("strategy-comparison-title");
   if (titleEl) {
-    titleEl.textContent = `Algorithm-Based Screener vs My Holdings — ${period.startLabel}–${period.endLabel}`;
+    titleEl.textContent = `Algorithm-Based Screener vs ${manualName} — ${period.startLabel}–${period.endLabel}`;
   }
 
   const chartTitle = document.getElementById("strategy-chart-title");
   if (chartTitle) {
-    chartTitle.textContent = `$1,000 Growth — Algorithm-Based vs My Holdings vs ${benchLabel}`;
+    chartTitle.textContent = `$1,000 Growth — Algorithm-Based vs ${manualName} vs ${benchLabel}`;
   }
 
   const verdictEl = document.getElementById("strategy-verdict");
@@ -198,7 +200,7 @@ function renderStrategyComparison() {
     const winnerLabel = verdict.winner === "algo" || verdict.winner === "ai"
       ? "Algorithm-based screener wins"
       : verdict.winner === "manual"
-        ? "Your holdings win"
+        ? `${manualName} wins`
         : "Tie";
     verdictEl.innerHTML = `
       <strong>${winnerLabel}</strong> by ${fmtMoney(verdict.marginDollars)} over
@@ -262,19 +264,20 @@ function renderStrategyComparison() {
     `;
   }
 
-  renderStrategyChart(cmp, benchLabel);
+  renderStrategyChart(cmp, benchLabel, manualName);
   renderStrategyTable(cmp);
 }
 
-function renderStrategyChart(cmp, benchLabel) {
+function renderStrategyChart(cmp, benchLabel, manualName) {
   const canvas = document.getElementById("strategyCompareChart");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
   const algo = getAlgoStrategy(cmp);
   const algoCurve = algo?.equityCurve ?? [];
-  const manual = cmp.manualStrategy.equityCurve ?? [];
+  const manualCurve = cmp.manualStrategy?.equityCurve ?? [];
   const bench = cmp.benchmark.equityCurve ?? [];
   const labels = algoCurve.map(r => r.label);
+  const manualLabel = manualName || cmp.manualStrategy?.name || "My Recommendation Holdings";
 
   if (strategyCompareChart) strategyCompareChart.destroy();
   strategyCompareChart = new Chart(ctx, {
@@ -293,8 +296,8 @@ function renderStrategyChart(cmp, benchLabel) {
           fill: true
         },
         {
-          label: "My Holdings",
-          data: manual.map(r => r.value),
+          label: manualLabel,
+          data: manualCurve.map(r => r.value),
           borderColor: "#51cf66",
           borderWidth: 2.5,
           pointRadius: 0,
